@@ -18,8 +18,7 @@ export default function Produtos() {
 
     const [busca, setBusca] = useState('');
     const produtosFiltro = produtos.filter( prod => prod.nome.toLowerCase().includes(busca.toLowerCase()));
-    //console.log(produtosFiltro)
-
+    const [show, setShow] =useState(false);
     return (
         <div>
             <div className={styles.divTitulo}>
@@ -30,6 +29,10 @@ export default function Produtos() {
                     value={busca}
                 />
             </div>
+            {show && <div 
+            className={styles.modal} 
+            onClick={() => setShow(false)}
+            ></div>}
                 <table className={styles.tbl}>
                     <thead>
                         <tr>
@@ -40,7 +43,7 @@ export default function Produtos() {
                     </thead>
                     <tbody>
                         {produtosFiltro.map((p) => (
-                            <tr key={p.id}>
+                            <tr key={p.id} onClick={() => setShow(true)}>
                                 <td>{p.id}</td>
                                 <td>{p.nome}</td>
                                 <td>{p.preco.toLocaleString('pt-br', {
