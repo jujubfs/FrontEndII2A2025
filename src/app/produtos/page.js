@@ -1,3 +1,5 @@
+"use client"
+import { useState } from 'react';
 import styles from './page.module.css';
 
 export default function Produtos() {
@@ -14,9 +16,20 @@ export default function Produtos() {
         { id: 10, nome: "Mesa Digitalizadora", preco: 750 }
     ];
 
+    const [busca, setBusca] = useState('');
+    const produtosFiltro = produtos.filter( prod => prod.nome.toLowerCase().includes(busca.toLowerCase()));
+    //console.log(produtosFiltro)
+
     return (
         <div>
-            <h1>Produtos</h1>
+            <div className={styles.divTitulo}>
+                <h1>Produtos</h1>
+                <input 
+                    type="text" 
+                    onChange={e => setBusca(e.target.value)}
+                    value={busca}
+                />
+            </div>
                 <table className={styles.tbl}>
                     <thead>
                         <tr>
@@ -26,11 +39,14 @@ export default function Produtos() {
                         </tr>
                     </thead>
                     <tbody>
-                        {produtos.map((produto) => (
-                            <tr key={produto.id}>
-                                <td>{produto.id}</td>
-                                <td>{produto.nome}</td>
-                                <td>R$ {produto.preco.toFixed(2)}</td>
+                        {produtosFiltro.map((p) => (
+                            <tr key={p.id}>
+                                <td>{p.id}</td>
+                                <td>{p.nome}</td>
+                                <td>{p.preco.toLocaleString('pt-br', {
+                                    style: 'currency',
+                                    currency: 'BRL'
+                                })}</td>
                             </tr>
                         ))}
                     </tbody>
