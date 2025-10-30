@@ -1,6 +1,7 @@
 "use client"
 import { useState } from 'react';
 import styles from './page.module.css';
+import Cardproduto from '@/components/Produto';
 
 export default function Produtos() {
     const produtos = [
@@ -16,9 +17,11 @@ export default function Produtos() {
         { id: 10, nome: "Mesa Digitalizadora", preco: 750 }
     ];
 
+    const [produto, setProduto] = useState(null);
+
     const [busca, setBusca] = useState('');
     const produtosFiltro = produtos.filter( prod => prod.nome.toLowerCase().includes(busca.toLowerCase()));
-    const [show, setShow] =useState(false);
+    const [show, setShow] = useState(false);
     return (
         <div>
             <div className={styles.divTitulo}>
@@ -29,10 +32,20 @@ export default function Produtos() {
                     value={busca}
                 />
             </div>
-            {show && <div 
-            className={styles.modal} 
-            onClick={() => setShow(false)}
-            ></div>}
+            {produto && <div 
+                className={styles.modal} 
+                onClick={() => setProduto(false)}
+            >
+                <Cardproduto 
+                nome={produto.nome}
+                id={produto.id}
+                preco={produto.preco.toLocaleString
+                    ('pt-br', {
+                        style: 'currency',
+                        currency: 'BRL'
+                    })}
+                />
+            </div>}
                 <table className={styles.tbl}>
                     <thead>
                         <tr>
@@ -42,11 +55,12 @@ export default function Produtos() {
                         </tr>
                     </thead>
                     <tbody>
-                        {produtosFiltro.map((p) => (
-                            <tr key={p.id} onClick={() => setShow(true)}>
+                        {produtosFiltro.map(p => (
+                            <tr key={p.id} onClick={() => setProduto (p)}>
                                 <td>{p.id}</td>
                                 <td>{p.nome}</td>
-                                <td>{p.preco.toLocaleString('pt-br', {
+                                <td>{p.preco.toLocaleString
+                                ('pt-br', {
                                     style: 'currency',
                                     currency: 'BRL'
                                 })}</td>

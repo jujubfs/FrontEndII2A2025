@@ -1,12 +1,26 @@
 .tbl {
     border-collapse: collapse;
     margin: auto;
-    font-size: 1,em;
+    font-size: 2em;
 }
 
-.tbl td, .tbl th{
+.tbl td, 
+.tbl th {
     border: 2px solid black;
     padding: 2px;
+}
+
+.tbl tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.tbl tbody tr:nth-child(even) {
+    background-color: #e0f7fa;
+}
+
+.tbl tbody tr:hover {
+    background-color: #eebbe1;
+    cursor: pointer;
 }
 
 .divTitulo {
@@ -18,7 +32,7 @@
 }
 
 .divTitulo input {
-    font-size: 25px;
+    font-size: 30px;
 }
 
 .modal {
@@ -28,4 +42,7 @@
     position: fixed;
     top: 0;
     left: 0;
+    align-items: center;
+    justify-content: center;
+    display: flex;
 }
