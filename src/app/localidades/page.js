@@ -23,14 +23,14 @@ export default function Localidades() {
         }
     }
 
-    const getCities = async () => {
+    const getCities = async (p) => {
         try {
-            const response = await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${pais}/municipios`);
+            const response = await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${p}/municipios`);
             if (!response.ok) {
                 throw new Error('Ocorreu um erro:', response.statusText);
             }
             const data = await response.json();
-            console.log('dados', data);
+            console.log('Cidades', data);
             setCidades(data)
 
         } catch (e) {
@@ -39,8 +39,10 @@ export default function Localidades() {
     }
 
     const selectUf = (ev) => {
-        setPais(ev.target.value);
-        console.log(pais)
+        const p = ev.target.value;
+        setPais(p);
+        setPais(p);
+        getCities(p);
     }
 
     useEffect(() => {
@@ -50,35 +52,17 @@ export default function Localidades() {
     return (
         <div>
             <h1>Localidades</h1>
-            {/* <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>SIGLA</th>
-                            <th>NOME</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {ufs.map(uf => (
-                            <tr key={uf.id}>
-                                <td>{uf.id}</td>
-                                <td>{uf.sigla}</td>
-                                <td>{uf.nome}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-            </table> */}
-
             <select
-                onClick={ev => selectUf(ev)}
+                value={pais}
+                onChange={ev => selectUf(ev)}
             >
+                <option value='' disabled>Selecione o estado</option>
                 {ufs.map(uf => (
                     <option 
                     value = {uf.id} 
                     key = {uf.id}
-
                     >
-                        {`${uf.sigla} - ${uf.nome}`}
+                        {`${uf.id} - ${uf.sigla} - ${uf.nome}`}
                     </option>
                 )
                 )}
